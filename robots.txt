@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://kikegarciabio.netlify.app/sitemap.xml

@@ -1,5 +1,5 @@
 @import "tailwindcss";
-@plugin "@midudev/tailwind-animations";
+@import "tailwind-animations";
 
 @font-face {
   font-family: 'Inter';

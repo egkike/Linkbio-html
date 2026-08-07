@@ -1,61 +1,49 @@
-## Proyecto LinkBio con HTML:
-Este es un proyecto de una página LinkBio para Kike Garcia desarrollado en HTML utilizando Tailwind CSS. La página tiene una foto de perfil, nombre con icono de verificación, una sección con Redes Sociales con los iconos a cada red social, una sección con grids a LinkedIn, Github, GH, Financial-Tools y un pié de página con link a un email.
-Utiliza el archivo /assets/sprite.svg para mostrar los Iconos.
-Importa fuente Inter del archivo /assets/inter.woff2.
+# LinkBio — Kike Garcia
 
-### Puedes ver funcionando la app en el siguiente link:
-https://kikegarciabio.netlify.app/
+Página LinkBio de una sola vista para Kike Garcia, desarrollada en **HTML** con **Tailwind CSS v4**, animaciones listas para usar y SEO completo. Incluye foto de perfil con badge de verificación, sección de redes sociales con iconos SVG, tarjetas de enlaces (LinkedIn, GitHub, GH, Financial-Tools), y un pie de página con contacto por email.
 
-## Inicializar el proyecto en una carpeta nueva:
-```
-npm init -y
-```
+## En vivo
 
-## Instalar las librerias npm:
-```
+▶ https://kikegarciabio.netlify.app/
+
+## Stack
+
+| Componente | Descripción |
+|------------|-------------|
+| HTML | Página estática de una sola vista |
+| CSS | Tailwind CSS v4 compilado vía `@tailwindcss/cli` |
+| Animaciones | Plugin `tailwind-animations` (vía `@import`) |
+| Iconos | Sprite SVG en `assets/sprite.svg` |
+| Tipografía | Fuente Inter (`assets/inter.woff2`) |
+| SEO | Meta tags, Open Graph, Twitter Cards, JSON-LD, `robots.txt`, `sitemap.xml` y `og-image` |
+
+## Puesta en marcha
+
+Instalá las dependencias:
+
+```bash
 npm install
 ```
 
-## Instalar dependencias:
-```
-npm install tailwindcss @tailwindcss/cli
-npm install @midudev/tailwind-animations
-```
+## Compilar los estilos
 
-## Crear un archivo .vscode/settings.json y asociar Tailwind con archivos de tipo css:
-```
-{
-  "files.associations": {
-    "*.css": "tailwindcss"
-  }
-}
-```
+El archivo `input.css` declara los `@import` y el tema (colores, fuente, breakpoints). Compilalo a `assets/output.css`:
 
-## Para compilar a un archivo css que podamos exportar y luego ejecutar:
-1- Crear el archivo input.css con los import y librerias a utilizar.
-
-2- Importar el pluggin en el archivo input.css:
-```
-@plugin "@midudev/tailwind-animations";
-```
-
-3- Agregar este scrip en el archivo package.json:
-```
-"build:styles": "npx @tailwindcss/cli -i ./input.css -o ./assets/output.css"
-```
-
-4- Ejecutar el scrip para compilar Tailwind y generar el archivo output.css:
-```
+```bash
 npm run build:styles
 ```
 
-5- Para desplegar copia el archivo index.html y la carpeta assests al sitio de despilegue que elijas.
+> `build:styles` = `npx @tailwindcss/cli -i ./input.css -o ./assets/output.css`
 
----
+### ¿Qué contiene `input.css`?
 
-## Plugging importado:
-Páginas del pluggin:
-https://tailwindcss-animations.vercel.app/
+```css
+@import "tailwindcss";
+@import "tailwind-animations";   /* plugin de animaciones */
+```
 
-https://github.com/midudev/tailwind-animations
+## Desplegar
 
+Copiá el `index.html` y la carpeta `assets/` al sitio de despliegue que elijas. El CSS ya queda incrustado por el `index.html` como `assets/output.css`.
+
+> SEO: los meta tags (Open Graph, Twitter Cards, JSON-LD) ya vienen embebidos en el `<head>` de `index.html`. Los archivos `robots.txt` y `sitemap.xml` viven en la raíz del sitio y deben desplegarse junto con el `index.html`.

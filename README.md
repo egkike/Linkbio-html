@@ -44,25 +44,31 @@ npm run build:styles
 
 ## Productos digitales
 
-La sección «Productos digitales» (debajo de la grilla de enlaces) lista los productos publicados en Hotmart. Cada producto es una tarjeta `<a>` con imagen cuadrada, badge de formato, título, bajada, precio y garantía.
+La sección «Productos digitales» (debajo de la grilla de enlaces) lista los productos publicados en Hotmart. Cada producto es una tarjeta `<a>` con imagen cuadrada, badge de formato, título, bajada, precio, garantía y llamada a la acción.
 
 Para publicar un producto nuevo, copiá la tarjeta existente en `index.html` y actualizá:
 
 | Dato | De dónde sale |
 |------|---------------|
-| `href` | Link de pago de Hotmart + parámetros de seguimiento |
+| `href` | Página de ventas del producto + parámetros de seguimiento |
 | `src` y `alt` | Imagen de listado **cuadrada** guardada en `assets/` |
-| Precio | Precio fijado en **USD**, nunca en ARS: el checkout convierte al tipo de cambio del día |
+| Precio y garantía | En **USD**, nunca en ARS: el checkout convierte al tipo de cambio del día |
+
+### Por qué el precio y la garantía van en la tarjeta
+
+La página de ventas de Hotmart Pages **no muestra el precio ni la garantía** (verificado: no aparecen en ningún punto del texto renderizado de la página). El precio recién se ve en el checkout, así que la tarjeta es la única fuente de esa información antes de pagar: no es decoración.
+
+La página de ventas aporta lo que la tarjeta no puede: qué incluye la guía, los números del contenido, los resultados concretos y el posicionamiento. Cada paso del recorrido suma información nueva en vez de repetirla.
 
 ### Parámetros de seguimiento
 
-El link de pago usa `sck` y `utm_source`, los parámetros oficiales de Hotmart para identificar el origen de las ventas:
+El link usa `sck` y `utm_source`, los parámetros oficiales de Hotmart para identificar el origen de las ventas:
 
-- `sck` — específico de Hotmart, para **productores** que dirigen el tráfico directo a la página de pago. Se consulta en el *Dashboard Origen de Ventas* (pestaña SCK).
+- `sck` — específico de Hotmart, pensado para **productores** que dirigen el tráfico a la página de pago. Se consulta en el *Dashboard Origen de Ventas* (pestaña SCK).
 - `utm_source` — estándar de marketing, compatible con Google Analytics.
 - `src` — es para enlaces de afiliados o páginas de ventas alternativas, **no** para este caso.
 
-> Los parámetros **no** se propagan al checkout si el link apunta a una página de ventas de Hotmart Pages: su CTA los descarta. Por eso la tarjeta apunta directo al link de pago.
+> Limitación conocida: el CTA de la página de ventas de Hotmart Pages **descarta** estos parámetros al ir al checkout (`?off=...&hotfeature=51`). Hotmart sí los recibe en la vista de la página, pero que sobrevivan hasta la venta está **sin verificar**: se confirma con una compra de prueba. Si no atribuyera, la alternativa es apuntar la tarjeta directo al link de pago.
 
 ## Desplegar
 

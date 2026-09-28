@@ -50,7 +50,7 @@ Para publicar un producto nuevo, copiá la tarjeta existente en `index.html` y a
 
 | Dato | De dónde sale |
 |------|---------------|
-| `href` | Página de ventas del producto + parámetros de seguimiento |
+| `href` | **HotLink** de Hotmart (`go.hotmart.com/<CÓDIGO>`) + parámetros de seguimiento |
 | `src` y `alt` | Imagen de listado **cuadrada** guardada en `assets/` |
 | Precio y garantía | En **USD**, nunca en ARS: el checkout convierte al tipo de cambio del día |
 
@@ -60,15 +60,31 @@ La página de ventas de Hotmart Pages **no muestra el precio ni la garantía** (
 
 La página de ventas aporta lo que la tarjeta no puede: qué incluye la guía, los números del contenido, los resultados concretos y el posicionamiento. Cada paso del recorrido suma información nueva en vez de repetirla.
 
+### El link es el HotLink, no la URL de la página de ventas
+
+La tarjeta apunta al **HotLink** del producto:
+
+```
+https://go.hotmart.com/B107791130H?src=linkbio&utm_source=linkbio
+```
+
+El HotLink es el redirector de Hotmart: recibe los parámetros, **los registra en el servidor** y recién después manda al visitante a la página de ventas. Esa diferencia es determinante:
+
+| Link | Qué pasa con el origen |
+|------|------------------------|
+| URL de la página de ventas + `?sck=...` | **Nada.** La página no guarda el parámetro en ninguna cookie y su CTA no lo reenvía al checkout |
+| Link de pago + `?sck=...` | Funciona (es el caso que documenta Hotmart para `sck`), pero salta la página de ventas |
+| **HotLink + `?src=...`** | Hotmart lo registra en la cookie `chkprm.hot` sobre `.hotmart.com`, que el checkout **sí** lee |
+
+Verificado de punta a punta: tras el HotLink, `chkprm.hot` = `{"src":"linkbio","utm_source":"linkbio","a":"B107791130H"}`, y ese mismo valor sigue presente en la página de pago.
+
 ### Parámetros de seguimiento
 
-El link usa `sck` y `utm_source`, los parámetros oficiales de Hotmart para identificar el origen de las ventas:
+- `src` — específico de Hotmart: **páginas de ventas alternativas** y enlaces de afiliación. Es el que corresponde cuando hay una página en el medio.
+- `utm_source` — estándar de marketing, compatible con Google Analytics. Se registra junto con `src`.
+- `sck` — específico de Hotmart, para productores que dirigen el tráfico **directo a la página de pago**. No sirve si hay una página de ventas en el medio.
 
-- `sck` — específico de Hotmart, pensado para **productores** que dirigen el tráfico a la página de pago. Se consulta en el *Dashboard Origen de Ventas* (pestaña SCK).
-- `utm_source` — estándar de marketing, compatible con Google Analytics.
-- `src` — es para enlaces de afiliados o páginas de ventas alternativas, **no** para este caso.
-
-> Limitación conocida: el CTA de la página de ventas de Hotmart Pages **descarta** estos parámetros al ir al checkout (`?off=...&hotfeature=51`). Hotmart sí los recibe en la vista de la página, pero que sobrevivan hasta la venta está **sin verificar**: se confirma con una compra de prueba. Si no atribuyera, la alternativa es apuntar la tarjeta directo al link de pago.
+> Lo que queda **sin verificar**: que el reporte *Origen de Ventas* escriba «linkbio» cuando se cierra la venta. Eso solo lo confirma una venta real. Hasta entonces, lo verificado es que el origen **llega** al checkout.
 
 ## Desplegar
 

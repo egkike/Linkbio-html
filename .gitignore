@@ -26,3 +26,6 @@ dist-ssr
 # Tooling local state
 .atl/
 .playwright-mcp/
+
+# ODD local task docs (not part of the published site)
+odd/

@@ -1,6 +1,6 @@
 # LinkBio — Kike Garcia
 
-Página LinkBio de una sola vista para Kike Garcia, desarrollada en **HTML** con **Tailwind CSS v4**, animaciones listas para usar y SEO completo. Incluye foto de perfil con badge de verificación, sección de redes sociales con iconos SVG, tarjetas de enlaces (LinkedIn, GitHub, GH, Financial-Tools), y un pie de página con contacto por email.
+Página LinkBio de una sola vista para Kike Garcia, desarrollada en **HTML** con **Tailwind CSS v4**, animaciones listas para usar y SEO completo. Incluye foto de perfil con badge de verificación, sección de redes sociales con iconos SVG, tarjetas de enlaces (LinkedIn, GitHub, GH, Financial-Tools), una sección **Productos digitales** con los productos publicados en Hotmart, y un pie de página con contacto por email.
 
 ## En vivo
 
@@ -41,6 +41,28 @@ npm run build:styles
 @import "tailwindcss";
 @import "tailwind-animations";   /* plugin de animaciones */
 ```
+
+## Productos digitales
+
+La sección «Productos digitales» (debajo de la grilla de enlaces) lista los productos publicados en Hotmart. Cada producto es una tarjeta `<a>` con imagen cuadrada, badge de formato, título, bajada, precio y garantía.
+
+Para publicar un producto nuevo, copiá la tarjeta existente en `index.html` y actualizá:
+
+| Dato | De dónde sale |
+|------|---------------|
+| `href` | Link de pago de Hotmart + parámetros de seguimiento |
+| `src` y `alt` | Imagen de listado **cuadrada** guardada en `assets/` |
+| Precio | Precio fijado en **USD**, nunca en ARS: el checkout convierte al tipo de cambio del día |
+
+### Parámetros de seguimiento
+
+El link de pago usa `sck` y `utm_source`, los parámetros oficiales de Hotmart para identificar el origen de las ventas:
+
+- `sck` — específico de Hotmart, para **productores** que dirigen el tráfico directo a la página de pago. Se consulta en el *Dashboard Origen de Ventas* (pestaña SCK).
+- `utm_source` — estándar de marketing, compatible con Google Analytics.
+- `src` — es para enlaces de afiliados o páginas de ventas alternativas, **no** para este caso.
+
+> Los parámetros **no** se propagan al checkout si el link apunta a una página de ventas de Hotmart Pages: su CTA los descarta. Por eso la tarjeta apunta directo al link de pago.
 
 ## Desplegar
 
